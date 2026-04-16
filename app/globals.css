@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-white: #FFFFFF;
+  --color-primary-red: #D62828;
+  --color-black: #0D0D0D;
+  --color-off-white: #F5F5F0;
+  --color-red-hover: #B01E1E;
+  
+  --font-bebas: var(--font-bebas-neue), sans-serif;
+  --font-inter: var(--font-inter), sans-serif;
+  
+  --color-foreground: var(--color-black);
+  --color-background: var(--color-off-white);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-inter);
+    @apply antialiased overflow-x-hidden;
+    cursor: none;
+  }
+
+  @media (pointer: coarse) {
+    body {
+      cursor: auto;
+    }
+  }
+
+  ::selection {
+    background: var(--color-primary-red);
+    color: var(--color-primary-white);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-bebas);
+    text-transform: uppercase;
+  }
+}
+
+.noise-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Lenis Recommended Styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* About section hollow stroke text */
+.about-stroke-text {
+  -webkit-text-stroke: 2px #3f3f46;
+}
+
+/* Accessibility: visible focus ring for keyboard navigation */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary-red);
+  outline-offset: 2px;
+}
