@@ -8,7 +8,6 @@ export default function Cursor() {
   const trailRefs = useRef([]);
 
   useEffect(() => {
-    // Only run on non-touch devices
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const ctx = gsap.context(() => {
@@ -55,27 +54,36 @@ export default function Cursor() {
       };
 
       const handleImageHoverState = () => {
-        gsap.to(cursor, { scale: 5, backgroundColor: "transparent", border: "1px solid red", duration: 0.3 });
+        gsap.to(cursor, {
+          scale: 5,
+          backgroundColor: "transparent",
+          border: "1px solid var(--color-ff-red)",
+          duration: 0.3,
+        });
       };
       
       const handleImageLeaveState = () => {
-        gsap.to(cursor, { scale: 1, backgroundColor: "rgb(220 38 38)", border: "none", duration: 0.3 });
+        gsap.to(cursor, {
+          scale: 1,
+          backgroundColor: "var(--color-ff-red)",
+          border: "none",
+          duration: 0.3,
+        });
       };
 
       window.addEventListener("mousemove", onMouseMove);
       
-      // Select all images or items that need DRAG state
       const dragItems = document.querySelectorAll("img, video");
       dragItems.forEach((item) => {
-          item.addEventListener("mouseenter", handleImageHoverState);
-          item.addEventListener("mouseleave", handleImageLeaveState);
+        item.addEventListener("mouseenter", handleImageHoverState);
+        item.addEventListener("mouseleave", handleImageLeaveState);
       });
 
       return () => {
         window.removeEventListener("mousemove", onMouseMove);
         dragItems.forEach((item) => {
-            item.removeEventListener("mouseenter", handleImageHoverState);
-            item.removeEventListener("mouseleave", handleImageLeaveState);
+          item.removeEventListener("mouseenter", handleImageHoverState);
+          item.removeEventListener("mouseleave", handleImageLeaveState);
         });
       };
     });
@@ -87,14 +95,14 @@ export default function Cursor() {
     <>
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 w-3 h-3 bg-red-600 rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
+        className="fixed top-0 left-0 w-3 h-3 bg-ff-red rounded-full pointer-events-none z-[9999] hidden md:block"
         style={{ transformOrigin: "center center" }}
       />
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
           ref={(el) => (trailRefs.current[i] = el)}
-          className="fixed top-0 left-0 w-3 h-3 bg-red-600 rounded-full pointer-events-none z-[9998] hidden md:block"
+          className="fixed top-0 left-0 w-3 h-3 bg-ff-red rounded-full pointer-events-none z-[9998] hidden md:block"
           style={{
             opacity: 1 - i * 0.15,
             transformOrigin: "center center",

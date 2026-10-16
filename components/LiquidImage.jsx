@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo, useState, useEffect } from "react";
+import { useRef, useMemo, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
@@ -14,16 +14,10 @@ const fragmentShader = `
 
   void main() {
     vec2 uv = vUv;
-    
-    // Liquid distortion logic
     float dist = distance(uv, uMouse);
     float force = smoothstep(0.4, 0.0, dist);
-    
-    // Wave calculations
     vec2 displacement = vec2(sin(uv.y * 10.0 + uTime) * 0.02, cos(uv.x * 10.0 + uTime) * 0.02) * force * uHover;
-    
     vec4 texColor = texture2D(uTexture, uv + displacement);
-    
     gl_FragColor = texColor;
   }
 `;
@@ -54,8 +48,6 @@ function Scene({ src, isHovered }) {
   useFrame((state) => {
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
-      
-      // Lerp hover state for smooth transition
       const targetHover = isHovered ? 1.0 : 0.0;
       materialRef.current.uniforms.uHover.value += (targetHover - materialRef.current.uniforms.uHover.value) * 0.1;
     }
@@ -80,15 +72,18 @@ function Scene({ src, isHovered }) {
   );
 }
 
-export default function LiquidImage({ src, alt }) {
-  const [isDesktop, setIsDesktop] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+function subscribe(callback) {
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+}
 
-  useEffect(() => {
-    if (window.innerWidth > 768) {
-      setIsDesktop(true);
-    }
-  }, []);
+export default function LiquidImage({ src, alt }) {
+  const isDesktop = useSyncExternalStore(
+    subscribe,
+    () => window.innerWidth > 768,
+    () => false
+  );
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div 
@@ -96,12 +91,21 @@ export default function LiquidImage({ src, alt }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isDesktop ? (
-        <Canvas camera={{ position: [0, 0, 1] }}>
+      {isDesktop && isHovered ? (
+        <Canvas 
+          camera={{ position: [0, 0, 1] }} 
+          gl={{ powerPreference: "low-power", antialias: false }}
+        >
           <Scene src={src} isHovered={isHovered} />
         </Canvas>
       ) : (
-        <Image src={src} alt={alt} fill className="object-cover" />
+        <Image 
+          src={src} 
+          alt={alt} 
+          fill 
+          className="object-cover" 
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       )}
     </div>
   );

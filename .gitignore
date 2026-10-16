@@ -3,3 +3,4 @@ node_modules/
 version-2/
 *.log
 .DS_Store
+scratch/

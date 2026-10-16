@@ -3,13 +3,26 @@
 import Marquee from "react-fast-marquee";
 
 export default function MarqueeDivider({ direction = "left", light = false }) {
-  const content = "PIZZA · BURGER · FRIES · SHAKE · PASTA · ";
-  
+  const items = [
+    "Crispy Chicken",
+    "Steamed Momos",
+    "Loaded Cheese Fries",
+    "Spicy Hakka Noodles",
+    "Special Fried Rice",
+    "Korean Wings",
+    "Butter Garlic Chicken"
+  ];
+
   return (
-    <div className={`py-4 overflow-hidden border-y border-zinc-200 ${light ? "bg-white text-black" : "bg-black text-red-600"}`}>
+    <div className={`py-4 overflow-hidden border-y border-ff-black ${light ? "bg-ff-surface text-ff-white" : "bg-ff-red text-ff-black"}`}>
       <Marquee speed={50} direction={direction} gradient={false}>
-        <div className="font-bebas text-4xl tracking-widest mr-4">
-          {content}{content}{content}{content}
+        <div className="flex items-center wordmark text-xs sm:text-sm">
+          {items.concat(items).concat(items).map((item, idx) => (
+            <span key={idx} className="inline-flex items-center mx-6">
+              <span>{item}</span>
+              <span className="font-display font-bold text-xs mx-6 opacity-70">FF</span>
+            </span>
+          ))}
         </div>
       </Marquee>
     </div>

@@ -1,6 +1,6 @@
-# Creamery Hut - Website
+# Flavours Fantasy - Website
 
-Premium street food restaurant website built with Next.js, featuring cinematic GSAP scroll animations, WebGL liquid image distortions, and a brutalist design system.
+Culinary restaurant and dining experience website built with Next.js, featuring cinematic GSAP scroll animations, WebGL liquid image distortions, and an editorial dark aesthetic.
 
 ## Tech Stack
 
@@ -11,7 +11,7 @@ Premium street food restaurant website built with Next.js, featuring cinematic G
 | **GSAP + ScrollTrigger** | Scroll-based animations, parallax |
 | **Lenis** | Butter-smooth native scroll |
 | **Framer Motion** | Gallery lightbox layout transitions |
-| **Three.js + React Three Fiber** | WebGL liquid image distortion (desktop only) |
+| **Three.js + React Three Fiber** | WebGL liquid image distortion (hover-only) |
 | **SplitType** | Character-level text animation |
 | **Lucide React** | SVG icon system |
 | **react-fast-marquee** | Scrolling text ticker strips |
@@ -19,34 +19,39 @@ Premium street food restaurant website built with Next.js, featuring cinematic G
 ## Folder Structure
 
 ```
-creamyhut/
+flavours-fantasy/
 ├── app/
-│   ├── globals.css        ← Global styles, Tailwind theme, Lenis config
-│   ├── layout.jsx         ← Root layout (fonts, providers, nav, footer)
-│   └── page.jsx           ← Single-page app (all sections)
+│   ├── globals.css        <- Global styles, token palette, typography
+│   ├── layout.jsx         <- Root layout (fonts, providers, nav, footer, SEO)
+│   ├── not-found.jsx      <- Custom branded 404 page
+│   ├── page.jsx           <- Single-page application (all sections)
+│   ├── robots.js          <- Search engine crawler directives
+│   └── sitemap.js         <- XML sitemap configuration
 ├── components/
-│   ├── Cursor.jsx         ← Custom cursor with trail + magnetic buttons
-│   ├── Footer.jsx         ← Site footer with scroll-to-section nav
-│   ├── GalleryLightbox.jsx← Framer Motion shared-layout lightbox
-│   ├── LiquidImage.jsx    ← WebGL shader distortion (desktop) / static Image (mobile)
-│   ├── MarqueeDivider.jsx ← Scrolling text ticker sections
-│   ├── MenuItemRow.jsx    ← Accordion-style menu item with GSAP
-│   ├── Navbar.jsx         ← Fixed navbar with ScrollSpy via IntersectionObserver
-│   ├── PageWipe.jsx       ← Red overlay transition for section navigation
-│   ├── ScrollProvider.jsx ← Lenis smooth scroll + GSAP ticker sync
-│   └── SplitCascadeText.jsx ← Character-reveal animation (desktop only)
+│   ├── Cursor.jsx         <- Custom cursor with trail and magnetic buttons
+│   ├── Footer.jsx         <- Site footer with navigation and social links
+│   ├── GalleryLightbox.jsx<- Framer Motion shared-layout lightbox
+│   ├── LiquidImage.jsx    <- WebGL shader distortion on hover
+│   ├── MarqueeDivider.jsx <- Editorial ticker divider
+│   ├── MenuItemRow.jsx    <- Accordion-style menu row with GSAP
+│   ├── Navbar.jsx         <- Fixed navbar with compact logo lockup
+│   ├── PageWipe.jsx       <- Red overlay transition for section navigation
+│   ├── ScrollProvider.jsx <- Lenis smooth scroll and GSAP ticker sync
+│   └── SplitCascadeText.jsx <- Character-reveal animation
 ├── public/
-│   ├── ghost_pepper_pizza_*.png  ← Placeholder: pizza photo
-│   ├── smash_burger_*.png        ← Placeholder: burger photo
-│   ├── truffle_fries_*.png       ← Placeholder: fries photo
-│   ├── oreo_shake_*.png          ← Placeholder: shake photo
-│   ├── restaurant_ambiance_*.png ← Placeholder: interior photo
-│   └── hero.mp4                  ← Placeholder: hero video reel
-├── version-2/             ← Experimental horizontal-scroll layout (independent Next.js app)
-├── next.config.mjs        ← Next.js configuration
-├── vercel.json            ← Vercel deployment config + security headers
-├── postcss.config.mjs     ← PostCSS for Tailwind
-└── package.json           ← Dependencies and scripts
+│   ├── brand/             <- Brand logos (flavours-fantasy-logo.png)
+│   ├── menu-pizza.png     <- Pizza presentation photo
+│   ├── menu-burger.png    <- Burger presentation photo
+│   ├── menu-fries.png     <- Sides presentation photo
+│   ├── menu-shake.png     <- Beverage presentation photo
+│   ├── ambiance.png       <- Dining room ambiance photo
+│   ├── hero.mp4           <- Optimized vertical video reel
+│   ├── hero.webm          <- WebM optimized vertical video reel
+│   └── hero-poster.jpg    <- Poster image for initial load
+├── next.config.mjs        <- Next.js configuration
+├── vercel.json            <- Vercel deployment config and security headers
+├── postcss.config.mjs     <- PostCSS for Tailwind
+└── package.json           <- Dependencies and scripts
 ```
 
 ## How to Run
@@ -67,53 +72,11 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Asset Swap Guide
-
-All visual assets are AI-generated placeholders. Replace each file in `/public/` with real photography:
-
-| Current File | Replace With |
-|-------------|-------------|
-| `ghost_pepper_pizza_*.png` | Professional pizza photography |
-| `smash_burger_*.png` | Professional burger photography |
-| `truffle_fries_*.png` | Professional fries photography |
-| `oreo_shake_*.png` | Professional shake photography |
-| `restaurant_ambiance_*.png` | Real restaurant interior photo |
-| `hero.mp4` | Real hero video reel (9:16 vertical) |
-
-Image constants are defined at the top of `app/page.jsx` for easy path updates.
-
-## Content Update Guide
-
-| Location | What to update |
-|----------|---------------|
-| `app/page.jsx` → `MENU_DATA` | Menu items, prices, ingredients |
-| `app/page.jsx` → Contact section | Phone number, email, address, hours |
-| `app/layout.jsx` → `metadata` | SEO title and description |
-| `components/Footer.jsx` | Address, hours, social links |
-| `components/MarqueeDivider.jsx` | Ticker text items |
-
 ## Security Features
 
 Implemented via `vercel.json` headers:
-
-- **Content-Security-Policy** - Restricts script/style/font/media sources
-- **Strict-Transport-Security** - Forces HTTPS with 2-year max-age
-- **X-Content-Type-Options: nosniff** - Prevents MIME type sniffing
-- **X-Frame-Options: SAMEORIGIN** - Prevents clickjacking
-- **X-XSS-Protection** - Legacy XSS filter enabled
-- **Referrer-Policy: strict-origin-when-cross-origin** - Controls referrer info
-- **Permissions-Policy** - Disables camera, microphone, geolocation APIs
-
-## Performance Notes
-
-- **Mobile optimization**: WebGL shaders (`LiquidImage`) and character-split animations (`SplitCascadeText`) are disabled on screens < 768px to prevent jitter
-- **Lazy rendering**: GSAP ScrollTrigger ensures animations only fire when elements enter the viewport
-- **Smooth scroll**: Lenis provides 120fps-synced scroll with GSAP ticker integration
-- **Video**: Hero video uses `preload="metadata"` to avoid blocking page load
-
-## Known Limitations
-
-- **Contact form**: Currently uses a mock `setTimeout` - needs a real API endpoint (e.g., Formspree, Resend, or custom backend)
-- **Newsletter**: Footer email subscription is frontend-only - needs backend integration
-- **Instagram feed**: Footer social grid is a placeholder - needs Instagram Graph API connection
-- **No favicon**: Add a `favicon.ico` and `apple-touch-icon.png` to `/public/` before launch
+- **Content-Security-Policy**: Restricts script, style, font, and media sources
+- **Strict-Transport-Security**: Forces HTTPS with 2-year max-age
+- **X-Frame-Options**: Prevents clickjacking (`SAMEORIGIN`)
+- **X-Content-Type-Options**: Blocks MIME-type sniffing (`nosniff`)
+- **Referrer-Policy**: Controls referrer information leakage

@@ -11,7 +11,6 @@ export default function MenuItemRow({ item }) {
   const tl = useRef(null);
 
   useEffect(() => {
-    // Setup GSAP animation
     const ctx = gsap.context(() => {
       gsap.set(contentRef.current, { height: 0, opacity: 0 });
       tl.current = gsap.timeline({ paused: true })
@@ -32,17 +31,24 @@ export default function MenuItemRow({ item }) {
   };
 
   return (
-    <div className="border-b border-zinc-200 py-6 group cursor-pointer" onClick={toggleOpen}>
-      <div className="flex justify-between items-center group-hover:text-red-600 transition-colors">
-        <h3 className="font-bebas text-3xl md:text-4xl m-0 flex-1">{item.name}</h3>
-        <div ref={arrowRef} className="mx-4 text-red-600">
-          <ChevronRight size={24} strokeWidth={3} />
+    <div 
+      className="border-b border-ff-black/15 py-6 group cursor-pointer" 
+      onClick={toggleOpen}
+    >
+      <div className="flex justify-between items-center transition-colors group-hover:text-ff-red-deep">
+        <h3 className="font-display text-2xl md:text-3xl m-0 flex-1 text-ff-black font-bold">
+          {item.name}
+        </h3>
+        <div ref={arrowRef} className="mx-4 text-ff-red-deep shrink-0">
+          <ChevronRight size={22} strokeWidth={2.5} />
         </div>
-        <div className="font-inter font-semibold text-xl md:text-2xl">{item.price}</div>
+        <div className="font-body font-semibold text-xl md:text-2xl text-ff-red-deep">
+          ₹{item.price}
+        </div>
       </div>
       
       <div ref={contentRef} className="overflow-hidden">
-        <p className="font-inter italic text-zinc-600 pt-4 max-w-2xl text-sm md:text-base">
+        <p className="font-body text-ff-grey-on-white pt-3 max-w-2xl text-base leading-relaxed">
           {item.ingredients}
         </p>
       </div>

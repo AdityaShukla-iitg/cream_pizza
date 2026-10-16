@@ -1,24 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-white: #FFFFFF;
-  --color-primary-red: #D62828;
-  --color-black: #0D0D0D;
-  --color-off-white: #F5F5F0;
-  --color-red-hover: #B01E1E;
-  
-  --font-bebas: var(--font-bebas-neue), sans-serif;
-  --font-inter: var(--font-inter), sans-serif;
-  
-  --color-foreground: var(--color-black);
-  --color-background: var(--color-off-white);
+  --color-ff-black: #000000;
+  --color-ff-white: #FFFFFF;
+  --color-ff-red: #FC0C14;
+  --color-ff-red-deep: #C4000C;
+  --color-ff-surface: #141414;
+  --color-ff-grey-on-black: #A3A3A3;
+  --color-ff-grey-on-white: #5C5C5C;
+
+  --font-display: var(--font-playfair), serif;
+  --font-body: var(--font-montserrat), sans-serif;
 }
 
 @layer base {
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font-family: var(--font-inter);
+    background-color: var(--color-ff-black);
+    color: var(--color-ff-white);
+    font-family: var(--font-montserrat), sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
     @apply antialiased overflow-x-hidden;
     cursor: none;
   }
@@ -30,23 +31,20 @@
   }
 
   ::selection {
-    background: var(--color-primary-red);
-    color: var(--color-primary-white);
+    background: var(--color-ff-red);
+    color: var(--color-ff-black);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-bebas);
-    text-transform: uppercase;
+    font-family: var(--font-playfair), serif;
   }
 }
 
-.noise-overlay {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+.wordmark {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
 }
 
 /* Lenis Recommended Styles */
@@ -66,9 +64,9 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* About section hollow stroke text */
+/* About section outline text */
 .about-stroke-text {
-  -webkit-text-stroke: 2px #3f3f46;
+  -webkit-text-stroke: 1.5px var(--color-ff-red);
 }
 
 /* Accessibility: visible focus ring for keyboard navigation */
@@ -76,6 +74,6 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--color-primary-red);
+  outline: 2px solid var(--color-ff-red);
   outline-offset: 2px;
 }

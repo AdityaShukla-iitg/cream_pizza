@@ -50,26 +50,41 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="fixed top-0 w-full z-50 transition-colors duration-500 bg-white shadow-sm border-b border-zinc-200">
+    <header className="fixed top-0 w-full z-50 transition-colors duration-500 bg-ff-black border-b border-ff-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <button onClick={() => scrollTo("hero")} className="magnetic-btn font-bebas text-3xl tracking-wider text-black py-2 px-4 rounded-xl">
-            Creamery Hut
+          <button 
+            onClick={() => scrollTo("hero")} 
+            className="magnetic-btn flex items-center py-2 text-left"
+            aria-label="Flavours Fantasy home"
+          >
+            <span className="font-display font-black text-3xl text-ff-red tracking-tight leading-none mr-2">
+              FF
+            </span>
+            <span className="wordmark text-xs sm:text-sm text-ff-white">
+              Flavours Fantasy
+            </span>
           </button>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex gap-4 font-inter font-medium uppercase tracking-wider text-sm" aria-label="Main navigation">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => scrollTo(link.id)}
-                className={`magnetic-btn transition-colors px-4 py-2 rounded-xl ${
-                  activeSection === link.id ? "text-red-600 bg-red-50" : "text-black hover:text-red-600"
-                }`}
-              >
-                {link.name}
-              </button>
-            ))}
+          <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => scrollTo(link.id)}
+                  className={`magnetic-btn wordmark text-xs py-1 transition-colors relative ${
+                    isActive ? "text-ff-red" : "text-ff-white hover:text-ff-red"
+                  }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-ff-red" />
+                  )}
+                </button>
+              );
+            })}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -78,7 +93,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isOpen}
-              className="text-black"
+              className="text-ff-white p-2"
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
@@ -88,12 +103,18 @@ export default function Navbar() {
 
       {/* Mobile Nav */}
       {isOpen && (
-        <div className="md:hidden bg-white text-black absolute top-20 left-0 w-full shadow-lg font-bebas text-2xl flex flex-col items-center py-8 space-y-6 border-b border-zinc-200" role="navigation" aria-label="Mobile navigation">
+        <div 
+          className="md:hidden bg-ff-black text-ff-white absolute top-20 left-0 w-full border-b border-ff-surface font-display text-2xl flex flex-col items-center py-8 space-y-6" 
+          role="navigation" 
+          aria-label="Mobile navigation"
+        >
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={() => scrollTo(link.id)}
-              className={`${activeSection === link.id ? "text-red-600" : "text-black"}`}
+              className={`transition-colors ${
+                activeSection === link.id ? "text-ff-red" : "text-ff-white hover:text-ff-red"
+              }`}
             >
               {link.name}
             </button>

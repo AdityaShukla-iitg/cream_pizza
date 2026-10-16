@@ -5,13 +5,15 @@ import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register ScrollTrigger globally once
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 export default function ScrollProvider({ children }) {
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -26,7 +28,6 @@ export default function ScrollProvider({ children }) {
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    // Store reference so we can remove the exact same function
     const rafCallback = (time) => {
       lenis.raf(time * 1000);
     };

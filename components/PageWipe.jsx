@@ -8,7 +8,6 @@ export default function PageWipe() {
   const textRef = useRef(null);
 
   useEffect(() => {
-    // Initial page load animation (similar to previous template)
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
       
@@ -18,14 +17,11 @@ export default function PageWipe() {
         .to(overlayRef.current, { yPercent: -100, duration: 0.8, ease: "power4.inOut" });
     });
 
-    // Global wipe trigger for fake "page transitions" on the single page
     window.triggerPageWipe = (scrollToId) => {
       const tl = gsap.timeline();
-      // Bring overlay down
       tl.set(overlayRef.current, { yPercent: 100 })
         .to(overlayRef.current, { yPercent: 0, duration: 0.6, ease: "power4.inOut" })
         .call(() => {
-           // Instantly jump to section while screen is covered
            const element = document.getElementById(scrollToId);
            if (element) {
              window.scrollTo(0, element.offsetTop - 80);
@@ -40,11 +36,16 @@ export default function PageWipe() {
   return (
     <div 
       ref={overlayRef} 
-      className="fixed inset-0 z-[100] bg-red-600 flex items-center justify-center pointer-events-none translate-y-0"
+      className="fixed inset-0 z-[100] bg-ff-red flex items-center justify-center pointer-events-none translate-y-0"
     >
-      <h1 ref={textRef} className="font-bebas text-white text-6xl tracking-wider uppercase">
-        Creamery Hut
-      </h1>
+      <div ref={textRef} className="text-center text-ff-black flex flex-col items-center">
+        <span className="font-display font-black text-7xl md:text-8xl leading-none">
+          FF
+        </span>
+        <span className="wordmark text-sm md:text-base mt-3">
+          Flavours Fantasy
+        </span>
+      </div>
     </div>
   );
 }
